@@ -1,27 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcsilv <marcsilv@42.student.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/18 21:48:55 by marcsilv          #+#    #+#             */
-/*   Updated: 2025/07/18 22:20:09 by marcsilv         ###   ########.fr       */
+/*   Created: 2025/07/18 21:48:51 by marcsilv          #+#    #+#             */
+/*   Updated: 2025/07/18 22:22:28 by marcsilv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#include "../../inc/structs.h"
+#include "../../inc/tester.h"
 
-# define RESET "\x1b[0m"
-# define RED "\x1b[31m"
-# define GREEN "\x1b[32m"
-
-typedef struct s_tester
+int	ft_mtxlen(char **matrix)
 {
-	char	*program;
-	int		n_args;
-	char	*valgrind_path;
-}	t_tester;
+	int	i;
 
-#endif
+	i = 0;
+	if (!matrix || !(*matrix))
+		return (0);
+	while (matrix[i])
+		i++;
+	return (i);
+}
+
+void	ft_mtxfree(char **matrix)
+{
+	int	i;
+
+	i = -1;
+	if (!matrix)
+		return ;
+	while ((matrix)[++i])
+	{
+		if ((matrix)[i])
+			free((matrix)[i]);
+		(matrix)[i] = NULL;
+	}
+	free(matrix);
+	matrix = NULL;
+}

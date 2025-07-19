@@ -12,15 +12,35 @@
 
 #include "../inc/structs.h"
 #include "../inc/tester.h"
-#include <stdio.h>
+//check if is printing in the stderr
 
-//./cub3D maps/mandatory.cub  
+
+void	test_input(t_tester *tester)
+{
+	char *args[] = {
+		tester->valgrind_path,
+		"--leak-check=full",
+		"--log-file=valgrind_output.txt",
+		strjoin("--log-file=", VALGRIND_OUTPUT_PATH),
+		tester->program,
+		NULL
+	};
+	execvp("valgrind", args);
+}
+
+/*void	start_tests(t_tester *tester)
+{
+	
+}*/
 
 int	main(int ac, char **av)
 {
-	printf("Testing...\n");
-	if (ac != 3)
-		dprintf(2, RED "Wrong number of arguments..." RESET);
+	t_tester	tester;
 
+	tester.valgrind_path = get_valgrind();
+	printf(GREEN "Testing...\n" RESET);
+	init(&tester, ac, av);
+	test_input(&tester);
+	free_structs(&tester);
 	return (0);
 }
